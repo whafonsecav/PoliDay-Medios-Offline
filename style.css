@@ -1,0 +1,320 @@
+/* VERSIÓN COMPLETA Y CORREGIDA */
+
+/* ---- RAÍZ Y VARIABLES ---- */
+:root { --dark-blue: #173653; --cyan-accent: #2ED4E2; --white: #FFFFFF; --black: #000000; --text-light: #f0f0f0; --grey-text: #B0B0B0; --font-heading: 'Poppins', sans-serif; --font-body: 'Inter', sans-serif; --font-mono: 'Roboto Mono', monospace; }
+
+/* ---- RESETEO Y GLOBALES ---- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body, html { width: 100%; height: 100%; overflow: hidden; font-family: var(--font-body); background-color: var(--black); color: var(--white); display: flex; justify-content: center; align-items: center; }
+
+/* ---- CONTENEDOR 16:9 ---- */
+#presentation-wrapper { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+#presentation-container { position: relative; width: 100%; height: 100%; max-width: calc(100vh * 16 / 9); max-height: calc(100vw * 9 / 16); aspect-ratio: 16 / 9; object-fit: contain; background: linear-gradient(135deg, var(--dark-blue) 0%, #0f273f 100%); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); overflow: hidden; }
+
+/* ---- ESTILOS GENERALES DE DIAPOSITIVA ---- */
+.slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in-out; display: flex; justify-content: center; align-items: center; }
+.slide.active { opacity: 1; visibility: visible; z-index: 1; }
+.slide-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 100%; padding: 5%; text-align: center; }
+.slide-title { font-family: var(--font-heading); font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--white); margin-bottom: 20px; font-weight: 600; }
+.intro-text { font-family: var(--font-body); font-size: clamp(1rem, 1.8vw, 1.3rem); color: var(--grey-text); max-width: 70%; margin-bottom: 60px; line-height: 1.6; }
+.intro-text strong { color: var(--cyan-accent); font-weight: 600; }
+mark { background-color: rgba(46, 212, 226, 0.25); color: var(--white); padding: 2px 6px; border-radius: 5px; }
+
+/* ---- DIAPOSITIVA 1: PORTADA ---- */
+.cover { background: url('https://source.unsplash.com/random/1920x1080?technology,data,network') center center / cover; position: relative; }
+.cover::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(23, 54, 83, 0.75); backdrop-filter: blur(5px); z-index: 0; }
+.cover > * { position: relative; z-index: 1; }
+.cover h1 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5.5vw, 5rem); line-height: 1.2; font-weight: 700; color: var(--white); max-width: 90%; text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); margin-bottom: 20px; }
+.cover h2 { font-family: var(--font-body); font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 300; color: var(--cyan-accent); margin-top: 15px; letter-spacing: 1px; }
+.cover .author-info { margin-top: 50px; padding-top: 25px; border-top: 1px solid rgba(var(--cyan-accent), 0.5); }
+.cover .name { font-weight: 600; font-size: clamp(1rem, 2vw, 1.6rem); color: var(--white); }
+.cover .role { font-weight: 400; font-size: clamp(0.9rem, 1.8vw, 1.4rem); color: var(--grey-text); }
+
+/* ---- ANIMACIÓN BRILLO ---- */
+@keyframes glowing-text { 0%, 100% { text-shadow: 0 0 5px var(--cyan-accent), 0 0 10px var(--cyan-accent), 0 0 15px rgba(46, 212, 226, 0.5); } 50% { text-shadow: 0 0 10px var(--cyan-accent), 0 0 20px var(--cyan-accent), 0 0 30px rgba(46, 212, 226, 0.5); } }
+.glowing-text { animation: glowing-text 3s infinite ease-in-out; }
+
+/* ---- DIAPOSITIVA 2: "UN POCO SOBRE MÍ" ---- */
+.journey-container { display: flex; justify-content: center; align-items: center; gap: 20px; }
+@keyframes fadeInItem { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.journey-item { display: flex; align-items: center; gap: 20px; opacity: 0; animation: fadeInItem 0.8s forwards ease-out; }
+.slide.active .journey-item:nth-child(1) { animation-delay: 0.3s; }
+.slide.active .journey-connector:nth-of-type(1) { animation-delay: 0.5s; }
+.slide.active .journey-item:nth-child(3) { animation-delay: 0.7s; }
+.slide.active .journey-connector:nth-of-type(2) { animation-delay: 0.9s; }
+.slide.active .journey-item:nth-child(5) { animation-delay: 1.1s; }
+.journey-item .fas { font-size: 3rem; color: var(--cyan-accent); }
+.journey-text { text-align: left; }
+.journey-text h3 { font-family: var(--font-heading); font-size: 1.8rem; color: var(--white); font-weight: 600; }
+.journey-text span { font-family: var(--font-body); font-size: 1rem; color: var(--grey-text); }
+.journey-connector { width: 80px; height: 2px; background-color: rgba(var(--cyan-accent), 0.3); opacity: 0; animation: fadeInItem 0.8s forwards ease-out; }
+
+/* ---- DIAPOSITIVA 3: TARJETA GIRATORIA ---- */
+.flip-card { background-color: transparent; width: 450px; height: 550px; perspective: 1500px; }
+.flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; }
+.flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.flip-card-back { transform: rotateY(180deg); }
+.person-card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(var(--cyan-accent), 0.3); border-radius: 20px; padding: 40px; text-align: center; color: var(--white); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.person-card img { width: 180px; height: 180px; border-radius: 50%; border: 4px solid var(--cyan-accent); object-fit: cover; margin-bottom: 30px; }
+.person-card p { font-size: 1.5rem; line-height: 1.6; font-weight: 300; max-width: 90%; }
+.person-card p strong { color: var(--cyan-accent); font-weight: 600; }
+.person-card span { display: block; font-size: 1rem; opacity: 0.7; margin-top: 15px; font-style: italic; color: var(--grey-text); }
+
+/* ---- DIAPOSITIVA 4: MAPA DE CARRERA ---- */
+.career-path-container { display: flex; justify-content: center; align-items: center; width: 100%; }
+@keyframes pop-in { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+.path-stop { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.slide.active .career-path-container > * { animation: fadeInItem 0.8s ease-out 0.3s forwards; }
+.stop-icon { width: 80px; height: 80px; background-color: rgba(0,0,0,0.3); border: 2px solid var(--cyan-accent); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
+.stop-icon .fas { font-size: 2.5rem; color: var(--cyan-accent); }
+.stop-info h3 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--white); margin-bottom: 5px; }
+.stop-info p { font-size: 1rem; color: var(--grey-text); }
+.path-stop.current .stop-icon { background-color: var(--cyan-accent); box-shadow: 0 0 20px var(--cyan-accent); }
+.path-stop.current .fas { color: var(--dark-blue); }
+.path-line { height: 3px; background: repeating-linear-gradient(90deg, var(--cyan-accent), var(--cyan-accent) 10px, transparent 10px, transparent 20px); width: 100%; }
+
+/*---- DIAPOSITIVA 5: FLUJO HORIZONTAL ----*/
+.process-flow-container { display: flex; justify-content: center; align-items: center; gap: 2vw; width: 100%; }
+.process-step { background: rgba(0,0,0,0.2); border-radius: 50%; width: 230px; height: 230px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 1px solid rgba(var(--cyan-accent), 0.2); transition: all 0.3s ease; padding: 10px; }
+.process-step:hover { transform: scale(1.05); border-color: var(--cyan-accent); }
+.process-icon { font-size: 3.5rem; color: var(--cyan-accent); margin-bottom: 15px; }
+.process-step h3 { font-family: var(--font-heading); font-size: clamp(1.4rem, 2vw, 1.6rem); line-height: 1.3; color: var(--white); margin-top: 10px; }
+.process-arrow { font-size: 2.5rem; color: rgba(var(--cyan-accent), 0.4); }
+.slide.active .process-flow-container > * { animation: pop-in 0.6s ease-out 0.3s forwards; opacity: 0; }
+
+/*---- DIAPOSITIVA 6: PREGUNTA EN DOS LÍNEAS ----*/
+.question-layout { justify-content: center; align-items: center; background: radial-gradient(circle at center, rgba(46, 212, 226, 0.1), transparent 60%); }
+.agenda-text { font-family: var(--font-body); font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; color: var(--grey-text); max-width: 80%; margin-bottom: 60px; opacity: 0; }
+.slide.active .agenda-text { animation: fadeInItem 1s ease-out forwards; animation-delay: 0.5s; }
+.main-question-multiline { font-family: var(--font-heading); font-size: clamp(3rem, 7vw, 6rem); line-height: 1.2; color: var(--cyan-accent); text-shadow: 0 0 5px var(--cyan-accent), 0 0 15px var(--cyan-accent), 0 0 30px rgba(46, 212, 226, 0.7); }
+.main-question-multiline span { display: block; opacity: 0; }
+.slide.active .main-question-multiline span { animation: fadeInItem 1s ease-out forwards; }
+.slide.active .main-question-multiline .line1 { animation-delay: 1.2s; }
+.slide.active .main-question-multiline .line2 { font-weight: 700; font-size: 1.1em; animation-delay: 1.8s; }
+
+/*---- DIAPOSITIVA 7: TARJETA DE DEFINICIONES ----*/
+.flip-card.definition-size { width: 800px; height: 450px; }
+.definition-card { background: rgba(0,0,0,0.2); border: 1px solid rgba(var(--cyan-accent), 0.2); border-radius: 20px; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.definition-card blockquote { font-family: var(--font-body); font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.6; font-weight: 300; color: var(--text-light); border-left: 4px solid var(--cyan-accent); padding-left: 30px; margin: 0 0 25px 0; }
+.definition-card footer { width: 100%; text-align: right; font-size: 1.1rem; font-style: italic; color: var(--grey-text); }
+
+/*=============== DIAPOSITIVA 8 - DEFINICIÓN CLAVE CON IMPACTO ===============*/
+@keyframes kinetic-entry { from { opacity: 0; transform: scale(0.3) rotate(-10deg) translateY(100px); } to { opacity: 1; transform: scale(1) rotate(0deg) translateY(0); } }
+.key-definition-layout { width: 100%; max-width: 900px; }
+.key-definition-title { font-family: var(--font-heading); font-size: clamp(4rem, 10vw, 8rem); font-weight: 800; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 20px; opacity: 0; }
+.key-definition-subtext { font-family: var(--font-body); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 300; line-height: 1.6; color: var(--grey-text); border-left: 3px solid var(--cyan-accent); padding-left: 25px; text-align: left; max-width: 80%; margin: 0 auto; opacity: 0; }
+.key-definition-subtext mark { background-color: transparent; color: var(--cyan-accent); padding: 0; font-weight: 700; text-shadow: 0 0 10px var(--cyan-accent); }
+.slide.active .key-definition-title { animation: kinetic-entry 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.2s; }
+.slide.active .key-definition-subtext { animation: kinetic-entry 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.4s; }
+
+/*=============== DIAPOSITIVA 9 - TARJETA DE IMÁGENES ===============*/
+.flip-card.flyer-size { width: 500px; height: 620px; }
+.image-question-card { background: rgba(0,0,0,0.2); border: 1px solid rgba(var(--cyan-accent), 0.2); border-radius: 20px; width: 100%; height: 100%; padding: 25px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.image-question-card img { width: 100%; height: 450px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.image-question-card h2 { font-family: var(--font-heading); font-size: 2rem; color: var(--cyan-accent); margin-top: 30px; text-shadow: 0 0 10px rgba(var(--cyan-accent), 0.5); }
+
+/*=============== DIAPOSITIVA 10 y 11 ===============*/
+.engaging-question { font-family: var(--font-heading); font-size: clamp(3rem, 7vw, 6rem); color: var(--white); text-shadow: 0 0 15px rgba(var(--cyan-accent), 0.8); opacity: 0; transform: scale(0.8); }
+.slide.active .engaging-question { animation: pop-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; animation-delay: 0.3s; }
+.media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 25px; width: 100%; max-width: 900px; margin-top: 40px; }
+.media-item { background: rgba(0,0,0,0.2); border: 1px solid rgba(var(--cyan-accent), 0.2); border-radius: 15px; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1 / 1; transition: transform 0.3s ease, border-color 0.3s ease; opacity: 0; }
+.slide.active .media-item { animation: pop-in 0.5s ease-out forwards; }
+.media-item:hover { transform: scale(1.05) translateY(-5px); border-color: var(--cyan-accent); }
+.media-item i { font-size: 3.5rem; color: var(--cyan-accent); margin-bottom: 20px; }
+.media-item p { font-family: var(--font-body); font-weight: 600; font-size: 1.2rem; color: var(--text-light); }
+.slide.active .media-item:nth-child(1) { animation-delay: 0.2s; }
+.slide.active .media-item:nth-child(2) { animation-delay: 0.3s; }
+.slide.active .media-item:nth-child(3) { animation-delay: 0.4s; }
+.slide.active .media-item:nth-child(4) { animation-delay: 0.5s; }
+.slide.active .media-item:nth-child(5) { animation-delay: 0.6s; }
+.slide.active .media-item:nth-child(6) { animation-delay: 0.7s; }
+.slide.active .media-item:nth-child(7) { animation-delay: 0.8s; }
+.slide.active .media-item:nth-child(8) { animation-delay: 0.9s; }
+.slide.active .media-item:nth-child(9) { animation-delay: 1.0s; }
+
+/* =============== DIAPOSITIVA IMPACTANTE (11) =============== */
+.transition-layout { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 40px; }
+.transition-subtitle { font-family: var(--font-mono); font-size: clamp(1.2rem, 2vw, 1.5rem); color: var(--grey-text); opacity: 0; }
+.slide.active .transition-subtitle { animation: fadeInItem 1s ease-out 0.5s forwards; }
+.transition-title { font-family: var(--font-heading); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 800; color: var(--white); text-transform: uppercase; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+.transition-title .word { display: inline-block; }
+.animated-char { display: inline-block; opacity: 0; transform: translateY(-50px) scale(0.5) rotate(15deg); }
+.slide.active .animated-char { animation: char-drop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+@keyframes char-drop { to { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); } }
+.focus-box { background: rgba(0, 0, 0, 0.3); border: 2px solid var(--cyan-accent); border-radius: 20px; padding: 30px 60px; display: flex; align-items: center; gap: 30px; box-shadow: 0 0 25px rgba(var(--cyan-accent), 0.5); opacity: 0; transform: translateY(50px); }
+.slide.active .focus-box { animation: fadeInItem 1s ease-out forwards; animation-delay: 2s; }
+.focus-box i { font-size: 4rem; color: var(--cyan-accent); }
+.focus-box h2 { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); color: var(--white); font-weight: 600; }
+
+/* =============== ESTILOS DIAPOSITIVA FLUJO TV (12) =============== */
+.tv-flow-layout .slide-title { opacity: 0; animation: fadeInItem 1s ease-out 0.2s forwards; }
+.tv-flow-container { display: grid; grid-template-areas: "start" "arrow" "decision" "paths"; grid-template-rows: auto auto auto 1fr; justify-items: center; width: 100%; gap: 15px; }
+.flow-start { grid-area: start; opacity: 0; }
+.flow-arrow { grid-area: arrow; width: 4px; height: 50px; background: var(--cyan-accent); position: relative; opacity: 0; transform: scaleY(0); transform-origin: top; }
+.flow-arrow::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 15px solid var(--cyan-accent); }
+.flow-decision { grid-area: decision; opacity: 0; }
+.flow-paths-container { grid-area: paths; display: flex; justify-content: center; gap: 120px; position: relative; width: 100%; padding-top: 60px; }
+.path-line-left, .path-line-right { position: absolute; top: 0; left: 50%; width: 4px; height: 60px; background: var(--cyan-accent); transform-origin: top; transform: scaleY(0); }
+.path-line-left::after, .path-line-right::after { content: ''; position: absolute; bottom: 0; height: 4px; background: var(--cyan-accent); width: 0; }
+.path-line-left::after { left: 0; transform-origin: right; }
+.path-line-right::after { right: 0; transform-origin: left; }
+.flow-path { width: 420px; background: rgba(0,0,0,0.2); border-top: 4px solid; border-radius: 15px; padding: 20px; opacity: 0; }
+.flow-path.positive { border-color: var(--cyan-accent); }
+.flow-path.negative { border-color: #ff6b6b; }
+.flow-start i, .flow-decision i { font-size: 3rem; color: var(--cyan-accent); margin-bottom: 10px; }
+.flow-decision h3 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--white); }
+.flow-decision p { color: var(--grey-text); max-width: 400px; }
+.flow-path h4 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 20px; }
+.flow-path.positive h4 { color: var(--cyan-accent); }
+.flow-path.negative h4 { color: #ff6b6b; }
+.action-icons { display: flex; justify-content: space-around; flex-wrap: wrap; }
+.icon-item { display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; min-width: 70px; margin: 5px; }
+.icon-item i { font-size: 2.5rem; }
+.icon-item span { font-weight: 600; color: var(--text-light); }
+.slide.active .flow-start { animation: pop-in 0.6s ease-out 0.8s forwards; }
+@keyframes draw-line-vertical { to { opacity: 1; transform: scaleY(1); } }
+.slide.active .flow-arrow { animation: draw-line-vertical 0.5s ease-out 1.4s forwards; }
+.slide.active .flow-decision { animation: pop-in 0.6s ease-out 1.9s forwards; }
+.slide.active .path-line-left { animation: draw-line-vertical 0.4s ease-out 2.5s forwards; }
+@keyframes draw-line-horizontal { to { width: 270px; } }
+.slide.active .path-line-left::after { animation: draw-line-horizontal 0.5s ease-out 2.9s forwards; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }
+.slide.active .path-line-right { animation: draw-line-vertical 0.4s ease-out 2.5s forwards; }
+.slide.active .path-line-right::after { animation: draw-line-horizontal 0.5s ease-out 2.9s forwards; animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }
+.slide.active .flow-path { animation: fadeInItem 0.8s ease-out 3.4s forwards; }
+.slide.active .flow-path .icon-item:nth-child(1) { animation: pop-in 0.5s ease-out 3.9s forwards; }
+.slide.active .flow-path .icon-item:nth-child(2) { animation: pop-in 0.5s ease-out 4.1s forwards; }
+.slide.active .flow-path .icon-item:nth-child(3) { animation: pop-in 0.5s ease-out 4.3s forwards; }
+.slide.active .flow-path.positive .icon-item:nth-child(4) { animation: pop-in 0.5s ease-out 4.5s forwards; }
+.slide.active .flow-path.positive .icon-item:nth-child(5) { animation: pop-in 0.5s ease-out 4.7s forwards; }
+
+/* =============== [MODIFICADO] ESTILOS: DIAPOSITIVA OBJETIVOS (13 y 18) =============== */
+.leads-objective-layout, .second-objective-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    opacity: 0; /* Estado inicial para la animación del contenedor */
+}
+.actions-source { display: flex; gap: 40px; }
+.actions-source .icon-item { opacity: 1; }
+.actions-source .icon-item i { font-size: 2.2rem; }
+.actions-source .icon-item span { font-size: 0.9rem; }
+.conversion-arrow { font-size: 3rem; color: var(--cyan-accent); }
+.lead-result { background: rgba(0,0,0,0.25); border: 2px solid var(--cyan-accent); border-radius: 20px; padding: 25px 40px; display: flex; align-items: center; gap: 20px; box-shadow: 0 0 20px rgba(var(--cyan-accent), 0.4); }
+.lead-result i { font-size: 3rem; color: var(--cyan-accent); }
+.lead-result h2 { font-family: var(--font-heading); font-size: 2.2rem; color: var(--white); }
+.optimization-goal { margin-top: 30px; border-left: 4px solid var(--cyan-accent); padding-left: 25px; text-align: left; }
+.optimization-goal h3 { font-family: var(--font-heading); font-weight: 600; color: var(--grey-text); font-size: 1.5rem; margin-bottom: 10px; }
+.optimization-goal p { font-size: 1.8rem; line-height: 1.5; color: var(--white); }
+.optimization-goal p mark { font-weight: 700; color: var(--cyan-accent); background: transparent; text-shadow: 0 0 8px var(--cyan-accent); padding: 0; }
+
+/* Animación única y fluida para los contenedores de objetivos */
+.slide.active .leads-objective-layout,
+.slide.active .second-objective-layout {
+    animation: fadeInItem 0.8s ease-out 0.3s forwards;
+}
+
+
+/* =============== ESTILOS: DIAPOSITIVA PUNTOS (15) =============== */
+.optimization-points-layout .slide-title { margin-bottom: 30px; }
+.points-list { list-style: none; width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; counter-reset: points-counter; }
+.point-item { background: rgba(0,0,0,0.2); border: 1px solid transparent; border-left: 3px solid var(--cyan-accent); padding: 15px 20px 15px 55px; text-align: left; border-radius: 8px; opacity: 0; transition: transform 0.3s ease, border-color 0.3s ease; position: relative; }
+.point-item:hover { transform: translateY(-5px); border-color: rgba(46, 212, 226, 0.5); }
+.point-item::before { content: counter(points-counter); counter-increment: points-counter; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background-color: transparent; border: 2px solid var(--cyan-accent); color: var(--cyan-accent); width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 1rem; }
+.point-item h3 { font-family: var(--font-heading); font-size: 1.2rem; color: var(--white); margin-bottom: 5px; }
+.point-item p { font-size: 0.9rem; color: var(--grey-text); line-height: 1.4; }
+.slide.active .point-item { animation: fadeInItem 0.5s ease-out forwards; }
+.slide.active .point-item:nth-child(1) { animation-delay: 0.4s; }
+.slide.active .point-item:nth-child(2) { animation-delay: 0.5s; }
+.slide.active .point-item:nth-child(3) { animation-delay: 0.6s; }
+.slide.active .point-item:nth-child(4) { animation-delay: 0.7s; }
+.slide.active .point-item:nth-child(5) { animation-delay: 0.8s; }
+.slide.active .point-item:nth-child(6) { animation-delay: 0.9s; }
+.concluding-phrase { font-family: var(--font-body); font-size: clamp(1.1rem, 1.7vw, 1.3rem); color: var(--text-light); max-width: 80%; margin-top: 35px; line-height: 1.6; background: rgba(0,0,0,0.2); padding: 20px; border-left: 4px solid var(--cyan-accent); border-radius: 0 8px 8px 0; text-align: left; opacity: 0; }
+.concluding-phrase mark { background-color: transparent; color: var(--cyan-accent); font-weight: 700; padding: 0; text-shadow: 0 0 8px var(--cyan-accent); }
+.slide.active .concluding-phrase { animation: fadeInItem 0.8s ease-out 1.2s forwards; }
+
+/* =============== ESTILOS: DIAPOSITIVA MONITOREO (17) =============== */
+.monitoring-layout .slide-title { margin-bottom: 20px; }
+.monitoring-layout .intro-text { max-width: 80%; margin-bottom: 25px; font-size: clamp(1rem, 1.6vw, 1.2rem); }
+.monitoring-list { list-style: none; width: 100%; max-width: 900px; display: flex; flex-direction: column; gap: 12px; }
+.monitoring-item { background: rgba(0, 0, 0, 0.25); border-left: 3px solid var(--cyan-accent); border-radius: 8px; padding: 12px 20px; display: flex; align-items: center; gap: 20px; text-align: left; opacity: 0; transition: background-color 0.3s ease; }
+.monitoring-item:hover { background-color: rgba(46, 212, 226, 0.1); }
+.monitoring-icon { font-size: 2rem; color: var(--cyan-accent); flex-shrink: 0; width: 35px; text-align: center; }
+.monitoring-text h3 { font-family: var(--font-heading); font-size: 1.1rem; color: var(--white); margin: 0 0 4px 0; }
+.monitoring-text p { font-size: 0.9rem; color: var(--grey-text); line-height: 1.4; margin: 0; }
+.slide.active .monitoring-item { animation: fadeInItem 0.5s ease-out forwards; }
+.slide.active .monitoring-item:nth-child(1) { animation-delay: 0.4s; }
+.slide.active .monitoring-item:nth-child(2) { animation-delay: 0.5s; }
+.slide.active .monitoring-item:nth-child(3) { animation-delay: 0.6s; }
+.slide.active .monitoring-item:nth-child(4) { animation-delay: 0.7s; }
+.slide.active .monitoring-item:nth-child(5) { animation-delay: 0.8s; }
+.slide.active .monitoring-layout .concluding-phrase { animation-delay: 1.2s; }
+
+/* =============== ESTILOS: DIAPOSITIVAS FINALES (19, 20, 21) =============== */
+/* --- Diapositiva 19: Conclusión Infografía --- */
+.conclusion-infographic-layout .slide-title { margin-bottom: 40px; }
+.infographic-container { display: flex; align-items: stretch; justify-content: center; gap: 30px; width: 100%; max-width: 1100px; }
+.infographic-column { background: rgba(0,0,0,0.2); border-radius: 20px; border-top: 4px solid var(--cyan-accent); padding: 25px; flex: 1; display: flex; flex-direction: column; opacity: 0; }
+.infographic-icon { font-size: 3rem; color: var(--cyan-accent); margin-bottom: 15px; }
+.infographic-column h3 { font-family: var(--font-heading); font-size: 1.8rem; color: var(--white); margin-bottom: 25px; }
+.keyword-list { list-style: none; text-align: left; margin-bottom: 25px; flex-grow: 1; }
+.keyword-list li { display: flex; align-items: center; gap: 12px; font-size: 1.1rem; color: var(--grey-text); margin-bottom: 15px; }
+.keyword-list i { color: var(--cyan-accent); }
+.infographic-goal { background: rgba(0,0,0,0.2); border-radius: 10px; padding: 15px; display: flex; align-items: center; gap: 15px; }
+.infographic-goal i { font-size: 2rem; color: var(--cyan-accent); }
+.infographic-goal span { font-size: 1.1rem; text-align: left; }
+.infographic-connector { display: flex; align-items: center; font-size: 4rem; color: var(--cyan-accent); font-weight: 300; opacity: 0; }
+.final-takeaway { margin-top: 40px; font-size: 1.5rem; line-height: 1.6; max-width: 70%; color: var(--text-light); opacity: 0; }
+.final-takeaway strong { color: var(--cyan-accent); font-weight: 600; }
+.slide.active .infographic-container > .infographic-column:first-of-type { animation: fadeInItem 0.8s ease-out 0.4s forwards; }
+.slide.active .infographic-connector { animation: pop-in 0.6s ease-out 0.8s forwards; }
+.slide.active .infographic-container > .infographic-column:last-of-type { animation: fadeInItem 0.8s ease-out 1.2s forwards; }
+.slide.active .final-takeaway { animation: fadeInItem 0.8s ease-out 1.6s forwards; }
+
+/* --- Diapositiva 20: Agradecimiento --- */
+.thank-you-layout { background: radial-gradient(circle at center, rgba(46, 212, 226, 0.05), transparent 70%); }
+.thank-you-layout h1 { font-family: var(--font-heading); font-size: clamp(5rem, 12vw, 10rem); font-weight: 800; color: var(--white); text-shadow: 0 0 15px rgba(var(--cyan-accent), 0.5); }
+.thank-you-layout .author-info { border-top-color: rgba(46, 212, 226, 0.3); }
+
+/* --- Diapositiva 21: Referencias --- */
+.references-layout { align-items: flex-start; text-align: left; }
+.references-layout .slide-title { margin-bottom: 40px; }
+.references-list p { font-family: var(--font-body); font-size: 1.1rem; color: var(--grey-text); line-height: 1.8; margin-bottom: 20px; }
+.references-list p em { color: var(--text-light); font-style: italic; }
+
+/* ---- [MEJORADO] CONTROLES DE NAVEGACIÓN ---- */
+.nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: transparent; border: none; color: var(--cyan-accent); font-size: clamp(3rem, 6vw, 5rem); cursor: pointer; z-index: 100; transition: color 0.3s ease, transform 0.3s ease; padding: 10px 20px; opacity: 0.4; }
+.nav-arrow:hover { color: var(--white); opacity: 1; transform: translateY(-50%) scale(1.1); }
+.nav-arrow.left { left: 2%; }
+.nav-arrow.right { right: 2%; }
+.nav-dots { position: absolute; bottom: 3%; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 12px; }
+.dot {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-color: transparent;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.dot.active {
+    background-color: var(--cyan-accent);
+    border-color: var(--cyan-accent);
+    color: var(--dark-blue);
+    transform: scale(1.15);
+    font-weight: 700;
+}
+.dot:hover:not(.active) {
+    border-color: var(--cyan-accent);
+    color: var(--white);
+}
